@@ -1,0 +1,19 @@
+.pageButtons{
+    background-color: #363d4f;
+    padding-top: 90px;
+    padding-bottom: 15px;
+    margin-top: -5px;
+    font-size: 20px;
+    width: 100%;
+}
+a {
+    color: white;  
+    text-decoration: none;
+    margin: 9%;
+}
+.recipePageFrame{
+    width: 100%;
+    height: 1000px;
+    border: none;
+
+}

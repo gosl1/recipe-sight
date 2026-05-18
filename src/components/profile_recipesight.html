@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../styles/profile_recipesight.css">
+    <title>Profile</title>
+</head>
+<body class="profilePage">
+
+    <div id="guestView">
+        <button onclick="showLogin()">Login</button>
+        <button onclick="showSignup()">Sign Up</button>
+
+        <div id="loginForm" style="display:none;">
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="login()">Submit</button>
+        </div>
+
+        <div id="signupForm" style="display:none;">
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button onclick="signup()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Shown when logged in -->
+    <div id="userView" style="display:none;">
+        <p>Username: <span id="displayUsername"></span></p>
+        <p>Email: <span id="displayEmail"></span></p>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script src="../scripts/profile_recipesight.js"></script>
+</body>
+</html>
