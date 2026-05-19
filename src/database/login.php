@@ -1,6 +1,10 @@
 <?php
 header('Content-Type: text/plain');
-$conn = new mysqli('localhost', 'root', '', 'recipe_sight');
+$database_servername = "localhost";
+$database_username = "root";
+$database_password = "";
+
+$conn = new mysqli($database_servername, $database_username, $database_password, "recipe_sight");
 
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -10,7 +14,8 @@ $stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result()->fetch_assoc();
 
-if ($result && password_verify($password, $result['password_hash'])) {
+    # temporary password hash fix since we don't have a hash system yet lol
+if ($result && $password == $result['password_hash']) {
     echo $result['user_id'] . '|' . $result['username'] . '|' . $result['email'];
 } else {
     echo 'fail';
