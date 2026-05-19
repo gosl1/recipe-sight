@@ -19,13 +19,13 @@ function showSignup() {
 }
 
 async function login() {
-    const formData = new FormData();
-    formData.append('email', document.getElementById('loginEmail').value);
-    formData.append('password', document.getElementById('loginPassword').value);
+    const formDetails = new FormData();
+    formDetails.append('email', document.getElementById('loginEmail').value);
+    formDetails.append('password', document.getElementById('loginPassword').value);
 
-    const res = await fetch('login.php', {
+    const res = await fetch('../database/login.php', {
         method: 'POST',
-        body: formData
+        body: formDetails
     });
 
     const data = await res.text();
@@ -40,14 +40,14 @@ async function login() {
 }
 
 async function signup() {
-    const formData = new FormData();
-    formData.append('username', document.getElementById('signupUsername').value);
-    formData.append('email', document.getElementById('signupEmail').value);
-    formData.append('password', document.getElementById('signupPassword').value);
+    const formDetails = new FormData();
+    formDetails.append('username', document.getElementById('signupName').value);
+    formDetails.append('email', document.getElementById('signupEmail').value);
+    formDetails.append('password', document.getElementById('signupPassword').value);
 
-    const res = await fetch('signup.php', {
+    const res = await fetch('../database/signup.php', {
         method: 'POST',
-        body: formData
+        body: formDetails
     });
 
     const data = await res.text();
@@ -59,6 +59,7 @@ async function signup() {
         sessionStorage.setItem('user', JSON.stringify(user));
         showUserView(user);
     }
+    console.log('signup response:', JSON.stringify(data));
 }
 
 function logout() {

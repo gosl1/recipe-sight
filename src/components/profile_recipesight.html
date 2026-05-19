@@ -5,21 +5,25 @@
     <title>Profile</title>
 </head>
 <body class="profilePage">
+    <button onclick="showLogin()">Login</button>
+    <button onclick="showSignup()">Sign Up</button>
 
     <div id="guestView">
-        <button onclick="showLogin()">Login</button>
-        <button onclick="showSignup()">Sign Up</button>
-
         <div id="loginForm" style="display:none;">
-            <input type="email" id="loginEmail" placeholder="Email">
-            <input type="password" id="loginPassword" placeholder="Password">
+            <label for="email">Email: </label><br>
+            <input type="email" id="loginEmail" name="loginEmail"><br>
+            <label for="password">Password: </label><br>
+            <input type="password" id="loginPassword" name="loginPassword"><br>
             <button onclick="login()">Submit</button>
         </div>
 
         <div id="signupForm" style="display:none;">
-            <input type="text" id="signupUsername" placeholder="Username">
-            <input type="email" id="signupEmail" placeholder="Email">
-            <input type="password" id="signupPassword" placeholder="Password">
+            <label for="name">Name: </label><br>
+            <input type="text" id="signupName" name="signupName"><br>
+            <label for="email">Email: </label><br>
+            <input type="email" id="signupEmail" name="signupEmail"><br>
+            <label for="password">Password: </label><br>
+            <input type="password" id="signupPassword" name="signupPassword"><br>
             <button onclick="signup()">Submit</button>
         </div>
     </div>
