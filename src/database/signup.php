@@ -1,10 +1,8 @@
 <?php
 header('Content-Type: text/plain');
-$database_servername = "localhost";
-$database_username = "root";
-$database_password = "";
+require_once 'DBConnector.php'
 
-$conn = new mysqli($database_servername, $database_username, $database_password, "recipe_sight");
+$conn = new mysqli($database_servername, $database_username, $database_password, $dbname);
 
 $username = $_POST['username'];
 $email = $_POST['email'];
