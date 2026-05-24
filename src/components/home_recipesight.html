@@ -2,21 +2,21 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeSights</title>
     <link rel="stylesheet" href="../styles/home_recipesight.css">
     <title>Home - RecipeSight</title>
 </head>
 <body class="homePage">
+
     <div class="homeRecipeSightBox">
         <h1 class="appName">RecipeSight</h1>
         
         <!-- Navigation -->
         <div class="nav">
-            <a href="home.php">Home</a>
-            <a href="profile.php">Profile</a>
-            <a href="inventory.php">Inventory</a>
-            <a href="recipe.php">Recipes</a>
             <?php if(isset($_SESSION['user_id'])): ?>
                 <a href="../database/logout.php">Logout</a>
             <?php else: ?>

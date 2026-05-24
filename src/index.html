@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/index.css">
     <title>RecipeSight</title>
 </head>
+
 <body>
+
     <main class="recipeSightMainHTML">
+
         <div class="pageButtons">
+
+            <div class="logoContainer">
+                <img src="/logo.png" class="logoImage" alt="RecipeSights Logo">
+                <h1 class="logoText">RecipeSights</h1>
+            </div>
+
             <nav class="tabNavigation">
                 <a href="./components/home_recipesight.html" target="contentFrame">HOME</a>
-                <a href="./components/recipe_recipesight.html" target="contentFrame">RECIPE</a>
+                <a href="./components/recipe_recipesight.html" target="contentFrame">RECIPES</a>
                 <a href="./components/inventory_recipesight.html" target="contentFrame">INVENTORY</a>
                 <a href="./components/profile_recipesight.html" target="contentFrame">PROFILE</a>
             </nav>
+
         </div>
-        <iframe name="contentFrame" src="./components/home_recipesight.html" class="recipePageFrame"></iframe>
+
+        <iframe
+            title="RecipeSight Content"
+            name="contentFrame"
+            src="./components/home_recipesight.html"
+            class="recipePageFrame">
+        </iframe>
+
     </main>
 
 </body>
 </html>
+
