@@ -245,7 +245,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `user` (`user_id`, `username`, `email`, `password_hash`) VALUES
-(1, 'recipe_admin', 'admin@recipesight.com', NULL);
+(1, 'recipe_admin', 'admin@recipesight.com', '$2y$10$5COwReVhdE9V1dKdnDzcQOf7XwgtF3HpaBvi9OSf2cJztjPkJJXMe'); --password-hash password is: juan123
 
 -- --------------------------------------------------------
 -- Table: recipe

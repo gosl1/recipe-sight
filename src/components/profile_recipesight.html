@@ -30,9 +30,26 @@
 
     <!-- Shown when logged in -->
     <div id="userView" style="display:none;">
-        <p>Username: <span id="displayUsername"></span></p>
-        <p>Email: <span id="displayEmail"></span></p>
-        <button onclick="logout()">Logout</button>
+        <div>
+            <p>Username: <span id="displayUsername"></span></p>
+            <p>Email: <span id="displayEmail"></span></p>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <div>
+            <table style="width: 100%">
+                <tr>
+                    <th>Recipe ID</th>
+                    <th>Recipe Name</th>
+                    <th>Description</th>
+                    <th>Instructions</th>
+                    <th>Ingredients</th>
+                    <th>Category</th>
+                    <th>Methods</th>
+                </tr>
+
+            </table>
+        </div>
     </div>
 
     <script src="../scripts/profile_recipesight.js"></script>
