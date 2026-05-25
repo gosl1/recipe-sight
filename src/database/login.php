@@ -1,8 +1,6 @@
 <?php
 header('Content-Type: text/plain');
-require_once 'DBConnector.php';
-
-$conn = new mysqli($database_servername, $database_username, $database_password, $dbname);
+include 'DBConnector.php';
 
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -13,9 +11,10 @@ $stmt->execute();
 $result = $stmt->get_result()->fetch_assoc();
 
     # temporary password hash fix since we don't have a hash system yet lol
-if ($result && $password == $result['password_hash']) {
+if ($result && password_verify($password, $result['password_hash'])) {
     echo $result['user_id'] . '|' . $result['username'] . '|' . $result['email'];
 } else {
     echo 'fail';
 }
+$conn->close();
 ?>

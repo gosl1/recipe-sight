@@ -1,8 +1,6 @@
 <?php
 header('Content-Type: text/plain');
-require_once 'DBConnector.php';
-
-$conn = new mysqli($database_servername, $database_username, $database_password, $dbname);
+include 'DBConnector.php';
 
 $username = $_POST['username'];
 $email = $_POST['email'];
@@ -14,11 +12,10 @@ $stmt->bind_param('sss', $username, $email, $password_hash);
 try {
     if ($stmt->execute()) {
         $id = $stmt->insert_id;
-        echo $id . '|' . $new_username . '|' . $new_email;
-    } else {
-        echo 'fail';
+        echo $id . '|' . $username . '|' . $email;
     }
 } catch (Exception $e) {
     echo 'fail';
 }
+$conn->close();
 ?>

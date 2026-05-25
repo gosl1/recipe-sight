@@ -1,3 +1,7 @@
 .profilePage {
     background-color: #fff8d4;
 }
+
+table, th, td {
+    border: 1px solid black;
+}
