@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: text/plain');
-require_once 'DBConnector.php'
+require_once 'DBConnector.php';
 
 $conn = new mysqli($database_servername, $database_username, $database_password, $dbname);
 
