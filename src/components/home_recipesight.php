@@ -1,16 +1,15 @@
-<?php session_start(); ?>
+<?php ?>
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="../styles/home_recipesight.css">
     <title>Home - RecipeSight</title>
     <script src="../scripts/home_recipesight.js" defer></script>
-    <!-- Additional inline style for autocomplete (small) -->
     <style>
         .autocomplete-items {
             position: absolute;
             border: 1px solid #ccc;
-            background: #fff;  /* white background */
+            background: #fff;
             max-height: 150px;
             overflow-y: auto;
             z-index: 99;
@@ -18,14 +17,13 @@
         .autocomplete-items div {
             padding: 8px;
             cursor: pointer;
-            color: #000;        /* black text */
+            color: #000;
             background-color: #fff;
         }
         .autocomplete-items div:hover {
-            background-color: #ff8c00;  /* orange highlight */
-            color: #fff;                /* white text on hover */
+            background-color: #ff8c00;
+            color: #fff;
         }
-
         .search-fields {
             display: flex;
             flex-wrap: wrap;
@@ -66,11 +64,6 @@
             color: #ff8c00;
             text-decoration: none;
         }
-        .nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-        }
         .tag-container {
             display: flex;
             flex-wrap: wrap;
@@ -102,10 +95,6 @@
 <body class="homePage">
     <div class="homeRecipeSightBox">
         <h1 class="appName">RecipeSight</h1>
-
-        <!-- Navigation -->
-        <div class="nav" style="text-align:center; margin-bottom:30px;">
-        </div>
 
         <!-- Search Form -->
         <form onsubmit="return false;">

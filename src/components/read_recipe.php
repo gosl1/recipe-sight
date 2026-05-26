@@ -78,8 +78,54 @@ $ingredients = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
            🍚 Carbs: <?php echo $recipe['carbs']; ?>g | 
            🧈 Fats: <?php echo $recipe['fats']; ?>g</p>
         <?php endif; ?>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <button id="shoppingListBtn" style="background:#ff8c00; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; margin-top:20px;">🛒 Generate Shopping List</button>
+            <div id="shoppingListResult" style="margin-top:20px;"></div>
+        <?php else: ?>
+            <p><a href="profile_recipesight.php" style="color:#ff8c00;">Login</a> to generate a shopping list based on your inventory.</p>
+        <?php endif; ?>
         
         <a href="home_recipesight.php" class="back-link">← Back to search</a>
     </div>
+    <script>
+    const userId = <?php echo $_SESSION['user_id'] ?? 1; ?>;
+    const recipeId = <?php echo $recipe_id; ?>;
+
+    document.getElementById('shoppingListBtn')?.addEventListener('click', async function() {
+        const btn = this;
+        const resultDiv = document.getElementById('shoppingListResult');
+        btn.disabled = true;
+        btn.textContent = 'Loading...';
+        resultDiv.innerHTML = '<p>Checking your inventory...</p>';
+
+        try {
+            const response = await fetch(`../database/get_missing_ingredients.php?user_id=${userId}&recipe_id=${recipeId}`);
+            const missing = await response.json();
+            if (missing.error) {
+                resultDiv.innerHTML = `<p>Error: ${missing.error}</p>`;
+                return;
+            }
+            if (missing.length === 0) {
+                resultDiv.innerHTML = '<p>✅ You have all the ingredients for this recipe!</p>';
+            } else {
+                let html = '<h3>Missing Ingredients for Shopping List</h3><ul>';
+                missing.forEach(ing => {
+                    html += `<li>${ing.quantity || ''} ${ing.unit || ''} ${ing.name}</li>`;
+                });
+                html += '</ul>';
+                // Optional: link to search online (e.g., Google Shopping)
+                const searchTerms = missing.map(ing => ing.name).join('+');
+                html += `<p><a href="https://www.google.com/search?q=${encodeURIComponent(searchTerms)}+groceries" target="_blank">🔍 Search for missing ingredients online</a></p>`;
+                resultDiv.innerHTML = html;
+            }
+        } catch (err) {
+            console.error(err);
+            resultDiv.innerHTML = '<p>Failed to load shopping list.</p>';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '🛒 Generate Shopping List';
+        }
+    });
+    </script>
 </body>
 </html>
