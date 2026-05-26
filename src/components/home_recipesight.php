@@ -10,7 +10,7 @@
         .autocomplete-items {
             position: absolute;
             border: 1px solid #ccc;
-            background: white;
+            background: #fff;  /* white background */
             max-height: 150px;
             overflow-y: auto;
             z-index: 99;
@@ -18,10 +18,14 @@
         .autocomplete-items div {
             padding: 8px;
             cursor: pointer;
+            color: #000;        /* black text */
+            background-color: #fff;
         }
         .autocomplete-items div:hover {
-            background: #e9e9e9;
+            background-color: #ff8c00;  /* orange highlight */
+            color: #fff;                /* white text on hover */
         }
+
         .search-fields {
             display: flex;
             flex-wrap: wrap;
@@ -67,6 +71,32 @@
             text-decoration: none;
             margin: 0 15px;
         }
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .ingredient-tag {
+            background: #ff8c00;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ingredient-tag button {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body class="homePage">
@@ -101,8 +131,9 @@
                     </select>
                 </div>
                 <div style="position:relative;">
-                    <label>Ingredient:</label>
-                    <input type="text" id="recipeIngredientsInput" placeholder="e.g., Chicken">
+                    <label>Ingredients:</label>
+                    <input type="text" id="ingredientInput" placeholder="Type ingredient name and press Enter or click suggestion...">
+                    <div id="ingredientTags" class="tag-container"></div>
                     <div id="autocomplete-list" class="autocomplete-items"></div>
                 </div>
                 <div>

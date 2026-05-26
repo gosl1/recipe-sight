@@ -1,6 +1,7 @@
-// home_recipesight.js
 let allIngredients = [];
+let selectedIngredients = [];
 
+// Load ingredient list from database
 async function loadIngredients() {
     try {
         const res = await fetch('../database/get_ingredients.php');
@@ -12,53 +13,89 @@ async function loadIngredients() {
     }
 }
 
-const ingInput = document.getElementById('recipeIngredientsInput');
+const ingInput = document.getElementById('ingredientInput');
 const autoList = document.getElementById('autocomplete-list');
+const tagContainer = document.getElementById('ingredientTags');
 
-if (ingInput) {
-    ingInput.addEventListener('input', function() {
-        const val = this.value.toLowerCase();
-        autoList.innerHTML = '';
-        if (!val) return;
-        const matches = allIngredients.filter(i => i.toLowerCase().includes(val)).slice(0, 8);
-        matches.forEach(m => {
-            const div = document.createElement('div');
-            div.textContent = m;
-            div.onclick = () => {
-                ingInput.value = m;
-                autoList.innerHTML = '';
-            };
-            autoList.appendChild(div);
-        });
+// Render tags
+function renderTags() {
+    tagContainer.innerHTML = '';
+    selectedIngredients.forEach(ing => {
+        const tag = document.createElement('span');
+        tag.className = 'ingredient-tag';
+        tag.innerHTML = `${ing} <button type="button" data-ing="${ing}">✖</button>`;
+        tag.querySelector('button').onclick = () => {
+            selectedIngredients = selectedIngredients.filter(i => i !== ing);
+            renderTags();
+        };
+        tagContainer.appendChild(tag);
     });
 }
 
+// Handle Enter key (add ingredient if valid)
+ingInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const val = ingInput.value.trim();
+        if (val && !selectedIngredients.includes(val) && allIngredients.includes(val)) {
+            selectedIngredients.push(val);
+            renderTags();
+            ingInput.value = '';
+            autoList.innerHTML = '';
+        } else if (val && !allIngredients.includes(val)) {
+            alert('Please select an ingredient from the list');
+        }
+    }
+});
+
+// Autocomplete on input
+ingInput.addEventListener('input', function() {
+    const val = this.value.toLowerCase();
+    autoList.innerHTML = '';
+    if (!val) return;
+    const matches = allIngredients.filter(i =>
+        i.toLowerCase().includes(val) && !selectedIngredients.includes(i)
+    ).slice(0, 8);
+    matches.forEach(m => {
+        const div = document.createElement('div');
+        div.textContent = m;
+        div.onclick = () => {
+            if (!selectedIngredients.includes(m)) {
+                selectedIngredients.push(m);
+                renderTags();
+                ingInput.value = '';
+                autoList.innerHTML = '';
+            }
+        };
+        autoList.appendChild(div);
+    });
+});
+
+// Close autocomplete when clicking outside
 document.addEventListener('click', (e) => {
     if (e.target !== ingInput) autoList.innerHTML = '';
 });
 
+// Search function
 async function searchRecipes() {
     const recipeName = document.getElementById('recipeNameInput').value.trim();
     const category = document.getElementById('recipeCategorySelect').value;
-    const ingredient = document.getElementById('recipeIngredientsInput').value.trim();
-
+    
     const params = new URLSearchParams();
     params.append('user_id', '1');
     if (recipeName) params.append('recipe_name', recipeName);
     if (category) params.append('category', category);
-    if (ingredient) params.append('ingredient', ingredient);
-
+    if (selectedIngredients.length > 0) {
+        params.append('ingredients', JSON.stringify(selectedIngredients));
+    }
+    
     const url = '../database/search_recipes.php?' + params.toString();
     const resultsDiv = document.getElementById('searchResults');
     resultsDiv.innerHTML = '<div style="text-align:center; padding:20px;">Searching...</div>';
-
+    
     try {
         const response = await fetch(url);
-        if (!response.ok) {
-            const text = await response.text();
-            console.error('API error response:', text.substring(0, 200));
-            throw new Error('Server error');
-        }
+        if (!response.ok) throw new Error('Server error');
         const recipes = await response.json();
         let html = '<h2>Search Results</h2>';
         if (recipes.length === 0) {

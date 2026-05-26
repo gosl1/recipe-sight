@@ -1,15 +1,18 @@
 <?php
-ini_set('display_errors', 0); // Do not output HTML errors
+ini_set('display_errors', 0);
 header('Content-Type: application/json');
-require_once __DIR__ . '/DBConnector.php'; // Use absolute path
+require_once __DIR__ . '/DBConnector.php';
 
-// Get search parameters
 $user_id = $_GET['user_id'] ?? $_POST['user_id'] ?? 1;
 $recipe_name = trim($_GET['recipe_name'] ?? $_POST['recipe_name'] ?? '');
 $category = trim($_GET['category'] ?? $_POST['category'] ?? '');
-$ingredient = trim($_GET['ingredient'] ?? $_POST['ingredient'] ?? '');
+$ingredients_json = $_GET['ingredients'] ?? $_POST['ingredients'] ?? '';
+$ingredients = [];
+if ($ingredients_json) {
+    $ingredients = json_decode($ingredients_json, true);
+    if (!is_array($ingredients)) $ingredients = [];
+}
 
-// Build query with OR conditions
 $sql = "
     SELECT DISTINCT r.recipe_id, r.title, r.description, r.instructions, c.category_name,
            n.calories, n.protein, n.carbs, n.fats
@@ -32,19 +35,21 @@ if (!empty($category)) {
     $params[] = $category;
     $types .= 's';
 }
-if (!empty($ingredient)) {
-    $conditions[] = "r.recipe_id IN (
-        SELECT ri.recipe_id
-        FROM recipe_ingredient ri
-        JOIN ingredient i ON ri.ingredient_id = i.ingredient_id
-        WHERE i.ingredient_name = ?
-    )";
-    $params[] = $ingredient;
-    $types .= 's';
+if (!empty($ingredients)) {
+    foreach ($ingredients as $ing) {
+        $conditions[] = "r.recipe_id IN (
+            SELECT ri.recipe_id
+            FROM recipe_ingredient ri
+            JOIN ingredient i ON ri.ingredient_id = i.ingredient_id
+            WHERE i.ingredient_name = ?
+        )";
+        $params[] = $ing;
+        $types .= 's';
+    }
 }
 
 if (count($conditions) > 0) {
-    $sql .= " AND (" . implode(" OR ", $conditions) . ")";
+    $sql .= " AND (" . implode(" AND ", $conditions) . ")";
 }
 
 $sql .= " ORDER BY r.created_at DESC";
@@ -54,7 +59,6 @@ $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $recipes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// Get ingredients for each recipe
 foreach ($recipes as &$recipe) {
     $istmt = $conn->prepare('
         SELECT i.ingredient_name, ri.quantity, u.unit_name
@@ -65,14 +69,10 @@ foreach ($recipes as &$recipe) {
     ');
     $istmt->bind_param('i', $recipe['recipe_id']);
     $istmt->execute();
-    $ingredients = $istmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    
-    $ingredient_strings = array_map(function($ing) {
-        $qty = $ing['quantity'] ? $ing['quantity'] . ' ' : '';
-        $unit = $ing['unit_name'] ? $ing['unit_name'] . ' ' : '';
-        return $qty . $unit . $ing['ingredient_name'];
-    }, $ingredients);
-    $recipe['ingredients'] = implode('<br>', $ingredient_strings);
+    $ingredientsList = $istmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $recipe['ingredients'] = implode('<br>', array_map(function($ing) {
+        return $ing['quantity'] . ' ' . $ing['unit_name'] . ' ' . $ing['ingredient_name'];
+    }, $ingredientsList));
 }
 
 echo json_encode($recipes);
