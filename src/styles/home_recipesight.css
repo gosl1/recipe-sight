@@ -26,7 +26,9 @@ a {
     color: #fff8d4;
     margin: 100px 200px 40px 200px;
     padding-top: 5px;
-    height: 500px;
+    /* height: 500px;  ← REMOVE or comment out */
+    min-height: 300px;  /* optional: give a minimum */
+    overflow-y: auto;   /* allow inner scrolling if needed */
 }
 .appName{
     font-size: 57px;
