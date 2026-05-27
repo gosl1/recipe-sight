@@ -1,3 +1,4 @@
+<!-- This html file is for the inventory page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,7 @@
     <div class="search-wrap">
       <input type="text" id="search" placeholder="Search ingredients…" oninput="filterTable()">
     </div>
+</div>
 
     <!-- Toolbar -->
     <div class="toolbar">

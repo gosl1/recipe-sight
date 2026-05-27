@@ -65,5 +65,5 @@ if ($conn->multi_query($sql)) {
 }
 
 echo "</pre>";
-echo "<a href='home.php'>Go to RecipeSight</a>";
+echo "<a href='./src/index.html'>Go to RecipeSight</a>";
 ?>

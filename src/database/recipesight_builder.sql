@@ -134,6 +134,7 @@ VALUES
 ('Pork',            242.00, 27.32,   0.00, 13.92),
 ('Potato',           77.00,  2.02,  17.49,  0.09),
 ('Rice',            130.00,  2.69,  28.17,  0.28),
+('Quinoa',          120.00,  4.40,  21.30,  1.90),
 ('Salt',              0.00,  0.00,   0.00,  0.00),
 ('Soy Sauce',        53.00,  8.14,   4.93,  0.57),
 ('Sugar',           387.00,  0.00, 100.00,  0.00),
@@ -146,12 +147,7 @@ VALUES
 
 -- --------------------------------------------------------
 -- unit_conversions seed data
--- Only volume and count units need rows here.
--- grams_equivalent = grams per 1 of that unit for that ingredient.
 -- --------------------------------------------------------
-
--- Each row is a SELECT that resolves ingredient_id and unit_id by name,
--- compatible with MariaDB (no VALUES ROW() syntax needed).
 INSERT INTO `unit_conversions` (`ingredient_id`, `unit_id`, `grams_equivalent`)
 -- Flour
 SELECT i.ingredient_id, u.unit_id,   2.60 FROM ingredient i, unit u WHERE i.ingredient_name = 'Flour'           AND u.unit_name = 'tsp'    UNION ALL
@@ -172,9 +168,9 @@ SELECT i.ingredient_id, u.unit_id,   15.00 FROM ingredient i, unit u WHERE i.ing
 SELECT i.ingredient_id, u.unit_id,  244.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Milk'           AND u.unit_name = 'cup'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,    1.03 FROM ingredient i, unit u WHERE i.ingredient_name = 'Milk'           AND u.unit_name = 'ml'     UNION ALL
 SELECT i.ingredient_id, u.unit_id, 1030.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Milk'           AND u.unit_name = 'liter'  UNION ALL
--- Egg (~50g per large egg)
+-- Egg
 SELECT i.ingredient_id, u.unit_id,  50.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Egg'             AND u.unit_name = 'piece'  UNION ALL
--- Chicken (~200g per bone-in piece)
+-- Chicken
 SELECT i.ingredient_id, u.unit_id, 200.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Chicken'         AND u.unit_name = 'piece'  UNION ALL
 -- Soy Sauce
 SELECT i.ingredient_id, u.unit_id,   5.69 FROM ingredient i, unit u WHERE i.ingredient_name = 'Soy Sauce'       AND u.unit_name = 'tsp'    UNION ALL
@@ -184,18 +180,19 @@ SELECT i.ingredient_id, u.unit_id, 240.00 FROM ingredient i, unit u WHERE i.ingr
 -- Vinegar
 SELECT i.ingredient_id, u.unit_id,   5.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Vinegar'         AND u.unit_name = 'tsp'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,  15.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Vinegar'         AND u.unit_name = 'tbsp'   UNION ALL
-SELECT i.ingredient_id, u.unit_id, 239.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Vinegar'         AND u.unit_name = 'cup'    UNION ALL
--- Garlic (~3g per clove)
-SELECT i.ingredient_id, u.unit_id,   3.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Garlic'          AND u.unit_name = 'clove'  UNION ALL
+SELECT i.ingredient_id, u.unit_id, 239.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Vinegar'         AND u.unit_name = 'cup'    -- Garlic
+UNION ALL SELECT i.ingredient_id, u.unit_id,   3.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Garlic'          AND u.unit_name = 'clove'  UNION ALL
 SELECT i.ingredient_id, u.unit_id,   2.80 FROM ingredient i, unit u WHERE i.ingredient_name = 'Garlic'          AND u.unit_name = 'tsp'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,   8.40 FROM ingredient i, unit u WHERE i.ingredient_name = 'Garlic'          AND u.unit_name = 'tbsp'   UNION ALL
--- Bay Leaf (~0.6g per piece)
+-- Bay Leaf
 SELECT i.ingredient_id, u.unit_id,   0.60 FROM ingredient i, unit u WHERE i.ingredient_name = 'Bay Leaf'        AND u.unit_name = 'piece'  UNION ALL
 -- Pepper
 SELECT i.ingredient_id, u.unit_id,   2.30 FROM ingredient i, unit u WHERE i.ingredient_name = 'Pepper'          AND u.unit_name = 'tsp'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,   6.90 FROM ingredient i, unit u WHERE i.ingredient_name = 'Pepper'          AND u.unit_name = 'tbsp'   UNION ALL
--- Rice (dry)
+-- Rice
 SELECT i.ingredient_id, u.unit_id, 185.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Rice'            AND u.unit_name = 'cup'    UNION ALL
+-- Quinoa
+SELECT i.ingredient_id, u.unit_id, 170.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Quinoa'          AND u.unit_name = 'cup'    UNION ALL
 -- Baking Powder
 SELECT i.ingredient_id, u.unit_id,   4.60 FROM ingredient i, unit u WHERE i.ingredient_name = 'Baking Powder'   AND u.unit_name = 'tsp'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,  13.80 FROM ingredient i, unit u WHERE i.ingredient_name = 'Baking Powder'   AND u.unit_name = 'tbsp'   UNION ALL
@@ -213,11 +210,11 @@ SELECT i.ingredient_id, u.unit_id, 216.00 FROM ingredient i, unit u WHERE i.ingr
 SELECT i.ingredient_id, u.unit_id,   7.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Honey'           AND u.unit_name = 'tsp'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,  21.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Honey'           AND u.unit_name = 'tbsp'   UNION ALL
 SELECT i.ingredient_id, u.unit_id, 340.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Honey'           AND u.unit_name = 'cup'    UNION ALL
--- Tomato (~120g per piece)
+-- Tomato
 SELECT i.ingredient_id, u.unit_id, 120.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Tomato'          AND u.unit_name = 'piece'  UNION ALL
--- Onion (~110g per piece)
+-- Onion
 SELECT i.ingredient_id, u.unit_id, 110.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Onion'           AND u.unit_name = 'piece'  UNION ALL
--- Banana (~120g per piece)
+-- Banana
 SELECT i.ingredient_id, u.unit_id, 120.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Banana'          AND u.unit_name = 'piece'  UNION ALL
 -- Yogurt
 SELECT i.ingredient_id, u.unit_id, 245.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Yogurt'          AND u.unit_name = 'cup'    UNION ALL
@@ -228,7 +225,7 @@ SELECT i.ingredient_id, u.unit_id,   6.25 FROM ingredient i, unit u WHERE i.ingr
 -- Coconut Milk
 SELECT i.ingredient_id, u.unit_id, 240.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Coconut Milk'    AND u.unit_name = 'cup'    UNION ALL
 SELECT i.ingredient_id, u.unit_id,  15.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Coconut Milk'    AND u.unit_name = 'tbsp'   UNION ALL
--- Carrot (~60g per piece)
+-- Carrot
 SELECT i.ingredient_id, u.unit_id,  60.00 FROM ingredient i, unit u WHERE i.ingredient_name = 'Carrot'          AND u.unit_name = 'piece';
 
 -- --------------------------------------------------------
@@ -282,8 +279,6 @@ CREATE TABLE `recipe_ingredient` (
 
 -- --------------------------------------------------------
 -- Table: nutrition_info
---   Stores the computed nutrition totals per recipe.
---   Recalculate and overwrite this row whenever recipe_ingredient changes.
 -- --------------------------------------------------------
 
 CREATE TABLE `nutrition_info` (
@@ -319,90 +314,207 @@ CREATE TABLE `user_inventory` (
 -- --------------------------------------------------------
 
 ALTER TABLE `recipe`
-  ADD CONSTRAINT `fk_recipe_user`
-    FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `fk_recipe_category`
-    FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_recipe_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_recipe_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE SET NULL;
 
 ALTER TABLE `recipe_ingredient`
-  ADD CONSTRAINT `fk_ri_recipe`
-    FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`recipe_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_ri_ingredient`
-    FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_ri_unit`
-    FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_ri_recipe` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`recipe_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ri_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ri_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE SET NULL;
 
 ALTER TABLE `nutrition_info`
-  ADD CONSTRAINT `fk_nutrition_recipe`
-    FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`recipe_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_nutrition_recipe` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`recipe_id`) ON DELETE CASCADE;
 
 ALTER TABLE `user_inventory`
-  ADD CONSTRAINT `fk_inv_user`
-    FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_inv_ingredient`
-    FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_inv_unit`
-    FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_inv_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_inv_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_inv_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE SET NULL;
 
 ALTER TABLE `unit_conversions`
-  ADD CONSTRAINT `fk_uc_ingredient`
-    FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_uc_unit`
-    FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_uc_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_uc_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE CASCADE;
+
 
 -- ============================================================
--- SEED DATA
+-- SEED DATA (REFACTORED & FIXED)
 -- ============================================================
 
+START TRANSACTION;
+
+-- 1. Chicken Adobo
 INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
 (1, (SELECT category_id FROM category WHERE category_name = 'Main Dish'),
- 'Chicken Adobo',
- 'Classic Filipino chicken stew simmered in soy sauce and vinegar.',
- 'Marinate chicken, simmer with vinegar and bay leaves, serve with rice.'),
-(1, (SELECT category_id FROM category WHERE category_name = 'Breakfast'),
- 'Fluffy Pancakes',
- 'Light and fluffy breakfast pancakes.',
- 'Mix dry and wet ingredients, cook on griddle until bubbles form.'),
-(1, (SELECT category_id FROM category WHERE category_name = 'Dessert'),
- 'Chocolate Chip Cookies',
- 'Classic homemade chocolate chip cookies.',
- 'Cream butter and sugar, add eggs and flour, fold in chips, bake.');
+ 'Chicken Adobo', 'Classic Filipino chicken stew simmered in soy sauce and vinegar.',
+ 'Marinate chicken, simmer with vinegar and bay leaves, serve with rice.');
+SET @last_id = LAST_INSERT_ID();
 
--- Chicken Adobo ingredients
 INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Chicken'),   500.00, (SELECT unit_id FROM unit WHERE unit_name = 'g')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Soy Sauce'),   0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Vinegar'),     0.25, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Garlic'),      6.00, (SELECT unit_id FROM unit WHERE unit_name = 'clove')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Bay Leaf'),    2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Pepper'),      1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Rice'),        2.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup'));
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Chicken'),   500.00, (SELECT unit_id FROM unit WHERE unit_name = 'g')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Soy Sauce'),   0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Vinegar'),     0.25, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Garlic'),      6.00, (SELECT unit_id FROM unit WHERE unit_name = 'clove')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Bay Leaf'),    2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Pepper'),      1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Rice'),        2.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup'));
 
--- Fluffy Pancakes ingredients
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(2, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Flour'),         1.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(2, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Milk'),          1.25, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(2, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Egg'),           1.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(2, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Butter'),        2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp')),
-(2, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Sugar'),         2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp')),
-(2, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Baking Powder'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-
--- Chocolate Chip Cookies ingredients
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(3, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Flour'),           2.25, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(3, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Butter'),          1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(3, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Sugar'),           0.75, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(3, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Egg'),             2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(3, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Vanilla Extract'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp')),
-(3, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Baking Soda'),    1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp'));
-
--- Nutrition (pre-computed totals)
 INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(1, 550.00, 38.00, 45.00, 22.00),
-(2, 350.00, 10.00, 55.00, 12.00),
-(3, 480.00,  6.00, 60.00, 25.00);
+(@last_id, 550.00, 38.00, 45.00, 22.00);
 
--- Admin inventory
+
+-- 2. Fluffy Pancakes
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Breakfast'),
+ 'Fluffy Pancakes', 'Light and fluffy breakfast pancakes.',
+ 'Mix dry and wet ingredients, cook on griddle until bubbles form.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Flour'),         1.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Milk'),          1.25, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Egg'),           1.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Butter'),        2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Sugar'),         2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Baking Powder'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 350.00, 10.00, 55.00, 12.00);
+
+
+-- 3. Chocolate Chip Cookies
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Dessert'),
+ 'Chocolate Chip Cookies', 'Classic homemade chocolate chip cookies.',
+ 'Cream butter and sugar, add eggs and flour, fold in chips, bake.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Flour'),           2.25, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Butter'),          1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Sugar'),           0.75, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Egg'),             2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Vanilla Extract'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Baking Soda'),    1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 480.00,  6.00, 60.00, 25.00);
+
+
+-- 4. Banana Bread
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Baking'),
+ 'Banana Bread', 'Moist banana bread with walnuts.',
+ 'Mash bananas, mix with butter, sugar, egg, flour, bake at 350°F for 60 min.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Flour'),  2.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Banana'), 3.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Butter'), 0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Sugar'),  1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Egg'),    2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 420.00, 6.00, 65.00, 18.00);
+
+
+-- 5. Tomato Basil Soup
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Soup'),
+ 'Tomato Basil Soup', 'Creamy tomato soup with fresh basil.',
+ 'Sauté onions and garlic, add tomatoes and broth, simmer and blend, stir in basil.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Tomato'),    6.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Onion'),     1.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Garlic'),    3.00, (SELECT unit_id FROM unit WHERE unit_name = 'clove')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 180.00, 5.00, 25.00, 8.00);
+
+
+-- 6. Caesar Salad
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Salad'),
+ 'Caesar Salad', 'Classic Caesar salad with croutons and Parmesan.',
+ 'Toss lettuce with dressing, top with croutons and Parmesan.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Parmesan'),  0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 350.00, 12.00, 20.00, 25.00);
+
+
+-- 7. Yogurt Parfait
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Snack'),
+ 'Yogurt Parfait', 'Layered Greek yogurt with granola and berries.',
+ 'Layer yogurt, granola, and berries. Drizzle with honey.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Yogurt'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Honey'),  1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 250.00, 15.00, 30.00, 8.00);
+
+
+-- 8. Banana Smoothie
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Beverage'),
+ 'Banana Smoothie', 'Creamy banana smoothie with yogurt.',
+ 'Blend all ingredients until smooth.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Banana'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Yogurt'), 0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Milk'),   1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Honey'),  1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 280.00, 10.00, 55.00, 5.00);
+
+
+-- 9. Marinara Sauce
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Sauce'),
+ 'Marinara Sauce', 'Classic tomato sauce for pasta.',
+ 'Sauté garlic in olive oil, add tomatoes and herbs, simmer for 20 minutes.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Tomato'),    4.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Garlic'),    3.00, (SELECT unit_id FROM unit WHERE unit_name = 'clove')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 3.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 120.00, 3.00, 15.00, 7.00);
+
+
+-- 10. Quinoa Salad (Fixed lookup mapping issue)
+INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
+(1, (SELECT category_id FROM category WHERE category_name = 'Healthy'),
+ 'Quinoa Salad', 'Healthy quinoa salad with vegetables.',
+ 'Cook quinoa, chop vegetables, mix with olive oil and lemon juice.');
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Quinoa'),    1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Tomato'),    2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Carrot'),    1.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
+(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
+
+INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
+(@last_id, 320.00, 10.00, 45.00, 12.00);
+
+
+-- Admin Inventory
 INSERT INTO `user_inventory` (`user_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
 (1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Chicken'),         2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
 (1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Soy Sauce'),       1.00, (SELECT unit_id FROM unit WHERE unit_name = 'bottle')),
@@ -418,106 +530,7 @@ INSERT INTO `user_inventory` (`user_id`, `ingredient_id`, `quantity`, `unit_id`)
 (1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Baking Powder'),   1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp')),
 (1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Vanilla Extract'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp')),
 (1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Baking Soda'),     1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tsp')),
-(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Rice'),            5.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup'));
-
--- ============================================================
--- COMMENTED-OUT RECIPES (uncomment to activate)
--- ============================================================
-
-/*
--- Baking: Banana Bread
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Baking'),
- 'Banana Bread', 'Moist banana bread with walnuts.',
- 'Mash bananas, mix with butter, sugar, egg, flour, bake at 350°F for 60 min.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Flour'),  2.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Banana'), 3.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Butter'), 0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Sugar'),  1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Egg'),    2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 420.00, 6.00, 65.00, 18.00);
-
--- Soup: Tomato Basil Soup
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Soup'),
- 'Tomato Basil Soup', 'Creamy tomato soup with fresh basil.',
- 'Sauté onions and garlic, add tomatoes and broth, simmer and blend, stir in basil.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Tomato'),    6.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Onion'),     1.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Garlic'),    3.00, (SELECT unit_id FROM unit WHERE unit_name = 'clove')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 180.00, 5.00, 25.00, 8.00);
-
--- Salad: Caesar Salad
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Salad'),
- 'Caesar Salad', 'Classic Caesar salad with croutons and Parmesan.',
- 'Toss lettuce with dressing, top with croutons and Parmesan.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Parmesan'),  0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 350.00, 12.00, 20.00, 25.00);
-
--- Snack: Yogurt Parfait
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Snack'),
- 'Yogurt Parfait', 'Layered Greek yogurt with granola and berries.',
- 'Layer yogurt, granola, and berries. Drizzle with honey.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Yogurt'), 1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Honey'),  1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 250.00, 15.00, 30.00, 8.00);
-
--- Beverage: Banana Smoothie
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Beverage'),
- 'Banana Smoothie', 'Creamy banana smoothie with yogurt.',
- 'Blend all ingredients until smooth.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Banana'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Yogurt'), 0.50, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Milk'),   1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Honey'),  1.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 280.00, 10.00, 55.00, 5.00);
-
--- Sauce: Marinara Sauce
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Sauce'),
- 'Marinara Sauce', 'Classic tomato sauce for pasta.',
- 'Sauté garlic in olive oil, add tomatoes and herbs, simmer for 20 minutes.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Tomato'),    4.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Garlic'),    3.00, (SELECT unit_id FROM unit WHERE unit_name = 'clove')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 3.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 120.00, 3.00, 15.00, 7.00);
-
--- Healthy: Quinoa Salad
-INSERT INTO `recipe` (`user_id`, `category_id`, `title`, `description`, `instructions`) VALUES
-(1, (SELECT category_id FROM category WHERE category_name = 'Healthy'),
- 'Quinoa Salad', 'Healthy quinoa salad with vegetables.',
- 'Cook quinoa, chop vegetables, mix with olive oil and lemon juice.');
-SET @last_id = LAST_INSERT_ID();
-INSERT INTO `recipe_ingredient` (`recipe_id`, `ingredient_id`, `quantity`, `unit_id`) VALUES
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Rice'),      1.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Tomato'),    2.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Carrot'),    1.00, (SELECT unit_id FROM unit WHERE unit_name = 'piece')),
-(@last_id, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Olive Oil'), 2.00, (SELECT unit_id FROM unit WHERE unit_name = 'tbsp'));
-INSERT INTO `nutrition_info` (`recipe_id`, `calories`, `protein`, `carbs`, `fats`) VALUES
-(@last_id, 320.00, 10.00, 45.00, 12.00);
-*/
+(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Rice'),            5.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup')),
+(1, (SELECT ingredient_id FROM ingredient WHERE ingredient_name = 'Quinoa'),          2.00, (SELECT unit_id FROM unit WHERE unit_name = 'cup'));
 
 COMMIT;
