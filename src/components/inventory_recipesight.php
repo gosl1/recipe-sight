@@ -8,13 +8,6 @@
 </head>
 <body>
 
-  <nav>
-    <a href="../components/home_recipesight.php">Home</a>
-    <a href="../components/recipe_recipesight.php">Recipes</a>
-    <a href="../database/inventory.php" class="active">Inventory</a>
-    <a href="../components/profile_recipesight.php">Profile</a>
-  </nav>
-
   <div class="body">
 
     <!-- Search -->

@@ -7,6 +7,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require 'DBConnector.php';
+
+
 $user_id = $_SESSION['user_id']; 
 
 
@@ -26,7 +28,7 @@ $result = $conn->query("SELECT
 ");
 
 $inventory_list = [];
-if ($result) {
+if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $inventory_list[] = $row;
     }
