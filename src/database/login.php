@@ -1,13 +1,4 @@
 <?php
-// If logout is requested, destroy session and redirect
-if (isset($_GET['logout'])) {
-    session_start();
-    session_destroy();
-    header('Location: ../src/components/home_recipesight.php');
-    exit;
-}
-
-session_start();
 header('Content-Type: text/plain');
 include 'DBConnector.php';
 
@@ -19,10 +10,8 @@ $stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result()->fetch_assoc();
 
+    # temporary password hash fix since we don't have a hash system yet lol
 if ($result && password_verify($password, $result['password_hash'])) {
-    $_SESSION['user_id'] = $result['user_id'];
-    $_SESSION['username'] = $result['username'];
-    $_SESSION['email'] = $result['email'];
     echo $result['user_id'] . '|' . $result['username'] . '|' . $result['email'];
 } else {
     echo 'fail';
