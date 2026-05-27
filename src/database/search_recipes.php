@@ -3,7 +3,11 @@ ini_set('display_errors', 0);
 header('Content-Type: application/json');
 require_once __DIR__ . '/DBConnector.php';
 
-$user_id = $_GET['user_id'] ?? $_POST['user_id'] ?? 1;
+// user_id is accepted but only used when scope=user (profile page).
+// Default scope is 'all' so the home page shows every user's recipes.
+$user_id = intval($_GET['user_id'] ?? $_POST['user_id'] ?? 1);
+$scope   = trim($_GET['scope'] ?? $_POST['scope'] ?? 'all');
+
 $recipe_name = trim($_GET['recipe_name'] ?? $_POST['recipe_name'] ?? '');
 $category = trim($_GET['category'] ?? $_POST['category'] ?? '');
 $ingredients_json = $_GET['ingredients'] ?? $_POST['ingredients'] ?? '';
@@ -13,16 +17,31 @@ if ($ingredients_json) {
     if (!is_array($ingredients)) $ingredients = [];
 }
 
-$sql = "
-    SELECT DISTINCT r.recipe_id, r.title, r.description, r.instructions, c.category_name,
-           n.calories, n.protein, n.carbs, n.fats
-    FROM recipe r
-    JOIN category c ON r.category_id = c.category_id
-    LEFT JOIN nutrition_info n ON r.recipe_id = n.recipe_id
-    WHERE r.user_id = ?
-";
-$params = [$user_id];
-$types = 'i';
+if ($scope === 'user') {
+    // Profile page: only this user's recipes
+    $sql = "
+        SELECT DISTINCT r.recipe_id, r.title, r.description, r.instructions, c.category_name,
+               n.calories, n.protein, n.carbs, n.fats
+        FROM recipe r
+        JOIN category c ON r.category_id = c.category_id
+        LEFT JOIN nutrition_info n ON r.recipe_id = n.recipe_id
+        WHERE r.user_id = ?
+    ";
+    $params = [$user_id];
+    $types = 'i';
+} else {
+    // Home page: all users' recipes
+    $sql = "
+        SELECT DISTINCT r.recipe_id, r.title, r.description, r.instructions, c.category_name,
+               n.calories, n.protein, n.carbs, n.fats
+        FROM recipe r
+        JOIN category c ON r.category_id = c.category_id
+        LEFT JOIN nutrition_info n ON r.recipe_id = n.recipe_id
+        WHERE 1=1
+    ";
+    $params = [];
+    $types = '';
+}
 $conditions = [];
 
 if (!empty($recipe_name)) {

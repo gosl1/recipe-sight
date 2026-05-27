@@ -4,7 +4,8 @@ require_once 'DBConnector.php';
 
 // Auth is not fully implemented yet — hardcoded to user_id 1 (recipe_admin).
 // Once login is wired up, replace this with: $_SESSION['user_id'] ?? 1
-$user_id   = 1;
+session_start();
+$user_id = $_SESSION['user_id'] ?? 1;
 $recipe_id = intval($_GET['recipe_id'] ?? $_POST['recipe_id'] ?? 0);
 
 if (!$recipe_id) {

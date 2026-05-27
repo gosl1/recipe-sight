@@ -82,13 +82,18 @@ async function searchRecipes() {
     const category = document.getElementById('recipeCategorySelect').value;
     
     const params = new URLSearchParams();
-    params.append('user_id', '1');
+    // Read user from sessionStorage (set by login) so search works for any user,
+    // not just user 1. Falls back to 1 if not logged in (guest browsing).
+    const sessionUser = JSON.parse(sessionStorage.getItem('user') || 'null');
+    const currentUserId = (sessionUser && sessionUser.id) ? sessionUser.id : '1';
+    params.append('user_id', currentUserId);
     if (recipeName) params.append('recipe_name', recipeName);
     if (category) params.append('category', category);
     if (selectedIngredients.length > 0) {
         params.append('ingredients', JSON.stringify(selectedIngredients));
     }
     
+    params.append('scope', 'all'); // home page shows all users' recipes
     const url = '../database/search_recipes.php?' + params.toString();
     const resultsDiv = document.getElementById('searchResults');
     resultsDiv.innerHTML = '<div style="text-align:center; padding:20px;">Searching...</div>';
