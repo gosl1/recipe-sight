@@ -35,6 +35,45 @@
             <p>Email: <span id="displayEmail"></span></p>
             <button onclick="logout()">Logout</button>
         </div>
+        <div>
+            <button onclick="showAddRecipe()">+ Add Recipe</button>
+
+            <div id="addRecipeForm" style="display:none;">
+                <label>Title:<br>
+                    <input type="text" id="newTitle"><br>
+                </label>
+                <label>Description:<br>
+                    <textarea id="newDesc"></textarea><br>
+                </label>
+                <label>Instructions:<br>
+                    <textarea id="newInstr"></textarea><br>
+                </label>
+                <label>Category:<br>
+                    <select id="newCategory">
+                        <option value="1">Main Dish</option>
+                        <option value="2">Breakfast</option>
+                        <option value="3">Dessert</option>
+                        <option value="4">Baking</option>
+                        <option value="5">Soup</option>
+                        <option value="6">Salad</option>
+                        <option value="7">Snack</option>
+                        <option value="8">Beverage</option>
+                        <option value="9">Sauce</option>
+                        <option value="10">Healthy</option>
+                    </select><br>
+                </label>
+
+                <!-- Ingredient rows -->
+                <label>Ingredients:</label><br>
+                <div id="ingredientRows">
+                    <!-- Rows injected by JS -->
+                </div>
+                <button type="button" onclick="addIngredientRow()">+ Add Ingredient</button><br><br>
+
+                <button onclick="submitAddRecipe()">Submit</button>
+                <button onclick="hideAddRecipe()">Cancel</button>
+            </div>
+        </div>
 
         <div>
             <table style="width: 100%">
@@ -47,7 +86,6 @@
                     <th>Category</th>
                     <th>Methods</th>
                 </tr>
-
             </table>
         </div>
     </div>
