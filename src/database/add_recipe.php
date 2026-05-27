@@ -1,8 +1,8 @@
 <?php
 header('Content-Type: text/plain');
 require_once 'DBConnector.php';
-
-$user_id     = intval($_POST['user_id']);
+session_start();
+$user_id = $_SESSION['user_id'] ?? intval($_POST['user_id'] ?? 0);
 $category_id = intval($_POST['category_id']);
 $title       = trim($_POST['title']);
 $description = trim($_POST['description'] ?? '');

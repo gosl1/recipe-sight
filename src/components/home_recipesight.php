@@ -92,6 +92,7 @@
         }
     </style>
 </head>
+
 <body class="homePage">
     <div class="homeRecipeSightBox">
         <h1 class="appName">RecipeSight</h1>
