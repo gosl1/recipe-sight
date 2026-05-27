@@ -56,3 +56,274 @@ label {
     margin-bottom: 60px;
     padding: 5px 150px 5px 183px;
 }
+/*-------------FOR THE INVENTORY-----------------*/
+/* ── Reset ── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Page ── */
+body {
+    background-color: #F5F5DC;
+    font-family: Georgia, serif;
+    min-height: 100vh;
+}
+
+/* ── Nav ── */
+nav {
+    background-color: #2C3547;
+    display: flex;
+}
+
+nav a {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    padding: 14px 0;
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s;
+}
+
+nav a.active {
+    color: #ffffff;
+    border-bottom: 3px solid #C8A84B;
+}
+
+nav a:hover {
+    color: #ffffff;
+}
+
+/* ── Body wrapper ── */
+.body {
+    padding: 20px 16px;
+}
+
+/* ── Search bar ── */
+.search-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-wrap input {
+    width: 70%;
+    padding: 9px 16px 9px 36px;
+    border: 1px solid #C8C8A0;
+    border-radius: 20px;
+    background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") no-repeat 12px center;
+    font-size: 14px;
+    color: #2C3547;
+    outline: none;
+}
+
+.search-wrap input:focus {
+    border-color: #2C3547;
+}
+
+/* ── Toolbar ── */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.toolbar span {
+    font-size: 12px;
+    color: #7A7A5A;
+}
+
+.btn-add {
+    background-color: #2C3547;
+    color: #ffffff;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+}
+
+.btn-add:hover {
+    background-color: #3C4660;
+}
+
+/* ── Table ── */
+
+
+table {
+    table-layout: fixed; /* makes column widths consistent */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    border: 1px solid #2C3547;
+}
+th:nth-child(1), td:nth-child(1) { width: 60px;  }  /* ID */
+th:nth-child(2), td:nth-child(2) { width: 30;  }  /* Product Name */
+th:nth-child(3), td:nth-child(3) { width: 100px;  }  /* Qty */
+th:nth-child(4), td:nth-child(4) { width: 120px; }  /* Actions */
+
+thead tr {
+    background-color: #2C3547;
+    color: #ffffff;
+}
+
+th {
+    padding: 10px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.03em;
+    border: 1px solid #2C3547;
+}
+
+tbody tr {
+    background-color: #F5F5DC;
+}
+
+tbody tr:hover {
+    background-color: #EFEFC8;
+}
+
+td {
+    padding: 10px 8px;
+    font-size: 13px;
+    color: #2C3547;
+    text-align: center;
+    border: 1px solid #2C3547;
+    height: 38px;
+}
+
+.btn-edit {
+    color: #1A4F7A;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: Georgia, serif;
+}
+
+.btn-edit:hover {
+    background-color: #E6F1FB;
+}
+
+.btn-del {
+    color: #A33030;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: Georgia, serif;
+}
+
+.btn-del:hover {
+    background-color: #FCEBEB;
+}
+
+/* ── Modal backdrop ── */
+.modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-bg.open {
+    display: flex;
+}
+
+/* ── Modal box ── */
+.modal {
+    background: #F5F5DC;
+    border-radius: 12px;
+    padding: 24px;
+    width: 300px;
+    border: 1px solid #C8C8A0;
+}
+
+.modal h3 {
+    font-size: 15px;
+    color: #2C3547;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.field {
+    margin-bottom: 12px;
+}
+
+.field label {
+    display: block;
+    font-size: 12px;
+    color: #7A7A5A;
+    margin-bottom: 4px;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #C8C8A0;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #ffffff;
+    color: #2C3547;
+    outline: none;
+    font-family: Georgia, serif;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: #2C3547;
+}
+
+/* ── Modal buttons ── */
+.modal-btns {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.btn-save {
+    flex: 1;
+    background-color: #2C3547;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 9px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+}
+
+.btn-save:hover {
+    background-color: #3C4660;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: none;
+    border: 1px solid #C8C8A0;
+    border-radius: 6px;
+    padding: 9px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #7A7A5A;
+    font-family: Georgia, serif;
+}
+
+.btn-cancel:hover {
+    background-color: #EFEFC8;
+}
