@@ -1,25 +1,15 @@
-.pageButtons{
-    background-color: #363d4f;
-    padding-top: 90px;
-    padding-bottom: 15px;
-    margin-top: -5px;
-    font-size: 20px;
-    width: 100%;
+/* This file is for styling the home page */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
-a {
-    color: white;  
-    text-decoration: none;
-    margin: 9%;
-}
-.recipePageFrame{
-    width: 100%;
-    height: 1000px;
-    border: none;
 
+body{
+    background-color: #f6f0cf;
 }
-.homePage,.recipePage, .inventoryPage, .profilePage {
-    background-color: #fff8d4;
-}
+
 .homeRecipeSightBox{
     display: block;
     background-color:#313647;
@@ -30,31 +20,136 @@ a {
     min-height: 300px;  /* optional: give a minimum */
     overflow-y: auto;   /* allow inner scrolling if needed */
 }
+
 .appName{
-    font-size: 57px;
-    text-align: 500px;
-    margin-left: 270px;
-    margin-bottom: 50px;
+    color: #f6f0cf;
+    font-size: 78px;
+    text-align: center;
+    margin-bottom: 65px;
 }
-label {
-    font-size: 30px;
-    margin-left: 50px;
 
-
+.formRow{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
 }
+
+.formRow label:first-child{
+    width: 215px;
+    color: #f6f0cf;
+    font-size: 28px;
+    padding-top: 10px;
+}
+
 .recipeNameInput{
-    margin-left: 50px;
-    font-size:40px;
-    margin-bottom: 60px;
+    width: 455px;
+    height: 52px;
+    border-radius: 15px;
+    border: 2px solid black;
+    background-color: #ece5bf;
+    padding-left: 20px;
+    font-size: 20px;
 }
-.recipeIngredientsInput{
-    margin-left: 53px;
-    font-size:40px;
-    margin-bottom: 60px;
+
+.categoryContainer{
+    position: relative;
+    width: 455px;
 }
-#recipeCuisineInput {
-    margin-left: 53px;
-    font-size:40px;
-    margin-bottom: 60px;
-    padding: 5px 150px 5px 183px;
+
+.categoryContainer label{
+    display: none;
+}
+
+.categoryDropdown{
+    width: 455px;
+    height: 52px;
+    border-radius: 15px;
+    border: 2px solid black;
+    background-color: #ece5bf;
+    padding-left: 20px;
+    font-size: 20px;
+    appearance: none;
+}
+
+.dropdownArrow{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 58px;
+    height: 52px;
+    border-left: 2px solid black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+}
+
+.ingredientsContainer{
+    width: 455px;
+    height: 170px;
+    background-color: #ece5bf;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 15px 18px;
+}
+
+.tagLabel{
+    font-size: 18px;
+}
+
+.tags{
+    display: inline-flex;
+    gap: 18px;
+    margin-left: 15px;
+}
+
+.tag{
+    width: 78px;
+    height: 24px;
+    background-color: #9aa27a;
+    border-radius: 8px;
+}
+
+.ingredientsTextArea{
+    width: 100%;
+    height: 85px;
+    border: none;
+    resize: none;
+    background: transparent;
+    outline: none;
+    margin-top: 22px;
+    font-size: 18px;
+}
+
+.findRecipeBtn{
+    width: 395px;
+    height: 56px;
+    background-color: #ece5bf;
+    border: none;
+    border-radius: 18px;
+    margin-top: 35px;
+    margin-left: 185px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #313647;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.arrowCircle{
+    width: 38px;
+    height: 38px;
+    background-color: #313647;
+    color: #f6f0cf;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

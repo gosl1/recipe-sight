@@ -1,58 +1,55 @@
-.pageButtons{
-    background-color: #363d4f;
-    padding-top: 90px;
-    padding-bottom: 15px;
-    margin-top: -5px;
-    font-size: 20px;
-    width: 100%;
+/* This file is for styling the inventory page */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-a {
-    color: white;  
-    text-decoration: none;
-    margin: 9%;
+
+body{
+    background-color: #f6f0cf;
+    font-family: Arial, Helvetica, sans-serif;
 }
-.recipePageFrame{
-    width: 100%;
-    height: 1000px;
+
+.inventoryContainer{
+    width: 85%;
+    margin: 60px auto;
+}
+
+.inventoryTitle{
+    font-size: 50px;
+    color: #313647;
+    margin-bottom: 35px;
+}
+
+.inventoryGrid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.inventoryCard{
+    background-color: #313647;
+    color: #f6f0cf;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.inventoryCard h2{
+    margin-bottom: 15px;
+}
+
+.inventoryButtons{
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.inventoryButtons button{
     border: none;
-
-}
-.homePage,.recipePage, .inventoryPage, .profilePage {
-    background-color: #fff8d4;
-}
-.homeRecipeSightBox{
-    display: block;
-    background-color:#313647;
-    color: #fff8d4;
-    margin: 100px 200px 40px 200px;
-    padding-top: 5px;
-    height: 500px;
-}
-.appName{
-    font-size: 57px;
-    text-align: 500px;
-    margin-left: 270px;
-    margin-bottom: 50px;
-}
-label {
-    font-size: 30px;
-    margin-left: 50px;
-
-
-}
-.recipeNameInput{
-    margin-left: 50px;
-    font-size:40px;
-    margin-bottom: 60px;
-}
-.recipeIngredientsInput{
-    margin-left: 53px;
-    font-size:40px;
-    margin-bottom: 60px;
-}
-#recipeCuisineInput {
-    margin-left: 53px;
-    font-size:40px;
-    margin-bottom: 60px;
-    padding: 5px 150px 5px 183px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #ece5bf;
+    color: #313647;
+    font-weight: bold;
 }

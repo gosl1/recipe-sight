@@ -1,32 +1,59 @@
+<!-- This html file is for the profile page not final -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | RecipeSights</title>
     <link rel="stylesheet" href="../styles/profile_recipesight.css">
-    <title>Profile</title>
 </head>
-<body class="profilePage">
-    <button onclick="showLogin()">Login</button>
-    <button onclick="showSignup()">Sign Up</button>
 
-    <div id="guestView">
-        <div id="loginForm" style="display:none;">
-            <label for="email">Email: </label><br>
-            <input type="email" id="loginEmail" name="loginEmail"><br>
-            <label for="password">Password: </label><br>
-            <input type="password" id="loginPassword" name="loginPassword"><br>
+<body class="profilePage">
+
+<main class="profileContainer">
+
+    <!-- Header -->
+    <section class="profileHeader">
+        <h1>My Profile</h1>
+        <p>Manage your recipes and saved ingredients.</p>
+    </section>
+
+    <!-- Guest View -->
+    <section id="guestView">
+
+        <div class="authButtons">
+            <button onclick="showLogin()">Login</button>
+            <button onclick="showSignup()">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="authForm">
+            <h2>Login</h2>
+
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail">
+
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword">
+
             <button onclick="login()">Submit</button>
         </div>
 
-        <div id="signupForm" style="display:none;">
-            <label for="name">Name: </label><br>
-            <input type="text" id="signupName" name="signupName"><br>
-            <label for="email">Email: </label><br>
-            <input type="email" id="signupEmail" name="signupEmail"><br>
-            <label for="password">Password: </label><br>
-            <input type="password" id="signupPassword" name="signupPassword"><br>
+        <!-- Signup Form -->
+        <div id="signupForm" class="authForm">
+            <h2>Create Account</h2>
+
+            <label for="signupName">Name</label>
+            <input type="text" id="signupName">
+
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail">
+
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword">
+
             <button onclick="signup()">Submit</button>
         </div>
-    </div>
 
     <!-- Shown when logged in -->
     <div id="userView" style="display:none;">
@@ -52,6 +79,5 @@
         </div>
     </div>
 
-    <script src="../scripts/profile_recipesight.js"></script>
 </body>
 </html>
