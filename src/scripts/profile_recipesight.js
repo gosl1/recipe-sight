@@ -67,7 +67,7 @@ async function signup() {
 
 function logout() {
     sessionStorage.removeItem('user');
-    window.location.href = '../database/login.php?logout=1';
+    location.reload();
 }
 
 async function loadRecipes(userId) {
