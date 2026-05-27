@@ -3,7 +3,6 @@
 if (isset($_GET['logout'])) {
     session_start();
     session_destroy();
-    header('Location: ../src/components/home_recipesight.php');
     exit;
 }
 
