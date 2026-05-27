@@ -1,235 +1,211 @@
-/* ==========================================================================
-   1. GLOBAL RESET & BASE STYLES
-   ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* css/styles.css */
+:root {
+    --brand-teal: #14b8a6;
+    --brand-dark: #0f172a;
+    --text-muted: #64748b;
+    --surface-light: #f8fafc;
+    --card-surface: #ffffff;
+    --accent-badge: #ccfbf1;
+    --border-line: #e2e8f0;
 }
 
 body {
-    background-color: #f6f0cf; /* Your signature pale cream background */
-    font-family: Arial, Helvetica, sans-serif;
-    color: #313647;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--surface-light);
+    color: var(--brand-dark);
+    margin: 0;
+    padding: 30px 15px;
+    line-height: 1.5;
 }
 
-/* ==========================================================================
-   2. TOP NAVIGATION BAR (Matches Wireframe Mockup)
-   ========================================================================== */
-.topNav {
-    background-color: #313647; /* Your dark blue-grey tone */
-    display: flex;
-    justify-content: space-around;
-    align-items: stretch;
-    height: 60px;
-    width: 100%;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.navLink {
-    color: #f6f0cf;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
+.search-header {
     text-align: center;
-    transition: background-color 0.2s ease;
-}
-
-.navLink:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-.navLink.active {
-    background-color: #5c655f; /* Muted olive highlight from image */
-}
-
-/* ==========================================================================
-   3. LAYOUT MAIN CONTAINERS
-   ========================================================================== */
-.recipeContainer {
-    width: 85%;
-    margin: 60px auto;
-}
-
-.recipeTitle {
-    font-size: 50px;
-    color: #313647;
-    margin-bottom: 35px;
-}
-
-/* 3-Column Responsive Layout Grid Grid */
-.recipeGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-}
-
-/* ==========================================================================
-   4. SEARCH COMPONENT (Sleek Pill Shape with Drop Shadow)
-   ========================================================================== */
-.searchSection {
-    display: flex;
-    justify-content: center;
     margin-bottom: 50px;
 }
 
-.searchBarForm {
-    width: 100%;
-    max-width: 550px;
+.search-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.025em;
 }
 
-.searchWrapper {
+.search-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+}
+
+/* Action row setting input and button side-by-side */
+.search-action-row {
     display: flex;
-    align-items: center;
-    background-color: #FFFFFF;
-    padding: 12px 25px;
+    max-width: 650px;
+    margin: 0 auto;
+    gap: 12px;
+}
+
+#search-bar {
+    flex-grow: 1;
+    padding: 16px 24px;
+    font-size: 16px;
+    border: 2px solid var(--border-line);
     border-radius: 50px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.searchIcon {
-    color: #313647;
-    font-size: 22px;
-    margin-right: 15px;
-}
-
-.searchInput {
-    border: none;
     outline: none;
-    width: 100%;
-    font-size: 18px;
-    font-weight: bold;
-    color: #313647;
-    background: transparent;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    box-sizing: border-box;
 }
 
-.searchInput::placeholder {
-    color: rgba(49, 54, 71, 0.6);
+#search-bar:focus {
+    border-color: #313647;
+    box-shadow: 0 4px 20px rgba(20, 184, 166, 0.15);
 }
 
-.searchSubmitBtn {
-    background: none;
+#search-btn {
+    background-color: #313647;
+    color: white;
     border: none;
+    padding: 0 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    color: #313647;
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-    transition: transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
 }
 
-.searchSubmitBtn:hover {
-    transform: scale(1.1);
+#search-btn:hover {
+    background-color: #0d9488;
 }
 
-/* ==========================================================================
-   5. DYNAMIC RECIPE CARDS (Clean Solid Outline Box Theme)
-   ========================================================================== */
-.recipeCard {
-    background-color: #FFFFFF;
-    border: 3px solid #313647; /* Sharp hand-drawn look layout outlines */
-    border-radius: 12px;       /* Moderately rounded corners */
+#search-btn:active {
+    transform: scale(0.98);
+}
+
+/* Layout Grid Configuration */
+.recipe-container-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 30px;
+}
+
+.detailed-recipe-card {
+    background: var(--card-surface);
+    border-radius: 16px;
+    border: 1px solid var(--border-line);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
-.recipeCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(49, 54, 71, 0.15);
+.detailed-recipe-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
 }
 
-/* Media/Image Containers */
-.cardImageWrapper {
-    position: relative;
+.card-hero-img {
     width: 100%;
-    height: 220px;
-    background-color: #EAEAEA;
-    border-bottom: 3px solid #313647;
-}
-
-.recipeImg {
-    width: 100%;
-    height: 100%;
+    height: 200px;
     object-fit: cover;
+    background-color: #cbd5e1;
 }
 
-/* Dynamic Interactive UI Badges & Floating Hearts */
-.favoriteBtn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #FFFFFF;
-    border: 2px solid #313647;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #313647;
-    font-size: 16px;
-}
-
-.inventoryMatchTag {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    background-color: #313647;
-    color: #f6f0cf;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-/* Text Content Area Formatting */
-.cardContent {
-    padding: 20px;
+.card-body-content {
+    padding: 24px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-.cardTags {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.tag {
+.category-tag {
+    align-self: flex-start;
+    background-color: var(--accent-badge);
+    color: #0d9488;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
     text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 4px;
-    background-color: #E3F2FD;
-    color: #0D47A1;
+    letter-spacing: 0.05em;
 }
 
-.recipeCard h2 {
-    font-size: 22px;
-    color: #313647;
-    line-height: 1.3;
+.recipe-heading-title {
+    margin: 0 0 10px 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
-/* Meta Footer Section (Aligns Time and Stars nicely at bottom) */
-.recipeMeta {
-    display: flex;
-    justify-content: space-between;
-    margin-top: auto; /* Pushes content flush to card bottom */
-    padding-top: 15px;
+.recipe-narrative-desc {
     font-size: 14px;
-    font-weight: bold;
-    color: #666666;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.metaItem i {
-    margin-right: 5px;
+.recipe-instructions-section {
+    border-top: 1px dashed var(--border-line);
+    padding-top: 14px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.recipe-instructions-section h4 {
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--brand-dark);
+    letter-spacing: 0.05em;
+}
+
+.recipe-instructions-text {
+    font-size: 13px;
+    color: #475569;
+    margin: 0;
+    max-height: 80px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Macro Nutrition Flex Dashboard */
+.macro-dashboard {
+    background-color: var(--surface-light);
+    border-radius: 12px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    border: 1px solid var(--border-line);
+}
+
+.macro-node {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.macro-node strong {
+    display: block;
+    font-size: 14px;
+    color: var(--brand-dark);
+    margin-top: 2px;
+}
+
+.state-notice {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
 }
