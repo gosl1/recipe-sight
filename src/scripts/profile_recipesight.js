@@ -65,7 +65,8 @@ async function signup() {
     console.log('signup response:', JSON.stringify(data));
 }
 
-function logout() {
+async function logout() {
+    await fetch('../database/login.php?logout=1');
     sessionStorage.removeItem('user');
     location.reload();
 }
