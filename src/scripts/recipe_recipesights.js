@@ -1,129 +1,112 @@
+const searchInput = document.getElementById('search-bar');
+const searchButton = document.getElementById('search-btn');
+const cardOutputGrid = document.getElementById('recipe-cards-output');
+let debounceTimer;
+
 /**
- * RecipeSight - Production Stable Free API Integration
+ * Handles communication with the backend endpoint
  */
-document.addEventListener('DOMContentLoaded', () => {
-    const recipeGrid = document.querySelector('.recipeGrid');
-    const searchInput = document.querySelector('.searchInput');
-    const searchForm = document.querySelector('.searchBarForm');
-
-    // EXPLICIT FIXED ENDPOINT
-    const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php';
-
-    // NETWORK LAYER: FETCH DATA FROM SERVER
-    async function fetchRecipes(searchQuery = '') {
-        try {
-            // Provide visual feedback inside the grid layout container
-            if (recipeGrid) {
-                recipeGrid.innerHTML = `<p class="loadingText" style="grid-column: span 3; text-align: center; font-weight: bold; font-size: 20px; color: #313647; padding: 40px 0;">Loading fresh recipes...</p>`;
-            }
-
-            const cleanQuery = searchQuery.trim() === '' ? 'a' : searchQuery.trim();
-            const requestUrl = `${API_URL}?s=${encodeURIComponent(cleanQuery)}`;
-
-            console.log("Fetching endpoint details from:", requestUrl);
-
-            const response = await fetch(requestUrl);
-            
-            // Check HTTP payload status
-            if (!response.ok) {
-                throw new Error(`HTTP network error! Status code context: ${response.status}`);
-            }
-
-            const data = await response.json();
-            
-            // TheMealDB returns data wrapped inside an array named .meals
-            renderRecipes(data.meals);
-
-        } catch (error) {
-            console.error('Critical Error loading database content:', error);
-            if (recipeGrid) {
-                recipeGrid.innerHTML = `<p style="grid-column: span 3; text-align: center; color: #D32F2F; font-weight: bold; padding: 40px 0;">⚠️ Network Connection Error. Please verify your internet access or browser CORS parameters.</p>`;
-            }
+async function triggerSearch(queryTerm = '') {
+    try {
+        const queryURL = `/recipe-sight/src/database/get_recipes.php?q=${encodeURIComponent(queryTerm)}`;
+        const networkResponse = await fetch(queryURL);
+        
+        if (!networkResponse.ok) {
+            throw new Error(`Server returned status code: ${networkResponse.status}`);
+        }
+        
+        const payloadData = await networkResponse.json();
+        renderDetailedCards(payloadData);
+        
+    } catch (networkError) {
+        console.error('Data pipeline exception occurred:', networkError);
+        if (cardOutputGrid) {
+            cardOutputGrid.innerHTML = `
+                <div class="state-notice" style="color: #ef4444; font-weight: 600; text-align: center; padding: 20px;">
+                    Unable to reach data stream. Please try again later.
+                </div>`;
         }
     }
+}
 
-    // PRESENTATION LAYER: RENDER CONTENT CARDS
-    function renderRecipes(meals) {
-        if (!recipeGrid) return;
+/**
+ * Iterates over the raw data rows to render recipe layouts
+ */
+function renderDetailedCards(collectionList) {
+    if (!cardOutputGrid) return;
 
-        // Clear loading texts or previous old records completely
-        recipeGrid.innerHTML = '';
+    if (collectionList.length === 0) {
+        cardOutputGrid.innerHTML = `
+            <div class="state-notice" style="text-align: center; padding: 20px; color: #6b7280;">
+                No matching recipes found. Try a different category or ingredient keyword!
+            </div>`;
+        return;
+    }
 
-        // If API returns no matching query objects, display a clean empty-state message
-        if (!meals || meals.length === 0) {
-            recipeGrid.innerHTML = `<p style="grid-column: span 3; text-align: center; font-weight: bold; font-size: 18px; color: #555; padding: 40px 0;">No recipes found matching that specific keyword.</p>`;
-            return;
-        }
+    cardOutputGrid.innerHTML = collectionList.map(recipe => {
+        const cardFallbackImage = recipe.image_url 
+            ? recipe.image_url 
+            : 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80';
+        
+        const assignedCategory = recipe.category_name ? recipe.category_name : 'General Selection';
+        const displayDescription = recipe.description ? recipe.description : 'No overview available for this item.';
+        const preparationGuide = recipe.instructions ? recipe.instructions : 'Refer to directions.';
+        
+        const metricCalories = recipe.calories ? Math.round(recipe.calories) : '—';
+        const metricProtein  = recipe.protein  ? Math.round(recipe.protein) + 'g' : '—';
+        const metricCarbs    = recipe.carbs    ? Math.round(recipe.carbs) + 'g' : '—';
+        const metricFats     = recipe.fats     ? Math.round(recipe.fats) + 'g' : '—';
 
-        // Loop through array rows smoothly
-        meals.forEach(meal => {
-            // Count total active ingredients dynamically
-            let totalIngredients = 0;
-            for (let i = 1; i <= 20; i++) {
-                if (meal[`strIngredient${i}`] && meal[`strIngredient${i}`].trim() !== "") {
-                    totalIngredients++;
-                }
-            }
-
-            // Create pseudo random data models to dynamically balance metadata tags across grid rows
-            const mockTime = 20 + (parseInt(meal.idMeal) % 35);
-            const mockRating = (4 + (parseInt(meal.idMeal) % 10) / 10).toFixed(1);
-
-            // Construct exact layout string matching your exact CSS variables
-            const cardHTML = `
-                <div class="recipeCard" data-id="${meal.idMeal}">
-                    <div class="cardImageWrapper">
-                        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="recipeImg" loading="lazy">
-                        <button class="favoriteBtn" aria-label="Save Recipe">
-                            <i class="far fa-heart"></i>
-                        </button>
-                        <span class="inventoryMatchTag">${totalIngredients} Ingredients</span>
+        return `
+            <article class="detailed-recipe-card" style="border: 1px solid #e5e7eb; border-radius: 8px; margin: 10px; overflow: hidden; background: #fff;">
+                <img src="${cardFallbackImage}" alt="${recipe.title}" style="width: 100%; height: 200px; object-fit: cover;">
+                <div style="padding: 15px;">
+                    <span style="font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-weight: 600;">${assignedCategory}</span>
+                    <h2 style="margin: 10px 0 5px 0; font-size: 1.25rem;">${recipe.title}</h2>
+                    <p style="color: #4b5563; font-size: 0.875rem; margin-bottom: 15px;">${displayDescription}</p>
+                    <div style="background: #f9fafb; padding: 10px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 15px;">
+                        <strong>Instructions:</strong> ${preparationGuide}
                     </div>
-                    <div class="cardContent">
-                        <div class="cardTags">
-                            <span class="tag">${meal.strCategory || 'Uncategorized'}</span>
-                        </div>
-                        <h2 class="recipeName" style="font-size: 20px; font-weight: bold; line-height: 1.3; height: 52px; overflow: hidden; margin-bottom: 15px; color: #313647;">${meal.strMeal}</h2>
-                        <div class="recipeMeta">
-                            <span class="metaItem"><i class="far fa-clock"></i> ${mockTime} mins</span>
-                            <span class="metaItem" style="color: #FFC107;"><i class="fas fa-star"></i> <span style="color: #555555;">${mockRating}</span></span>
-                        </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; text-align: center; font-size: 0.75rem; background: #f3f4f6; padding: 8px; border-radius: 6px;">
+                        <div>Cal<br><strong>${metricCalories}</strong></div>
+                        <div>Prot<br><strong>${metricProtein}</strong></div>
+                        <div>Carb<br><strong>${metricCarbs}</strong></div>
+                        <div>Fat<br><strong>${metricFats}</strong></div>
                     </div>
                 </div>
-            `;
-            
-            recipeGrid.insertAdjacentHTML('beforeend', cardHTML);
-        });
+            </article>
+        `;
+    }).join('');
+}
 
-        // Initialize event logic handlers on freshly rendered cards
-        attachFavoriteListeners();
-    }
+// Active Search Event Listeners
+if (searchInput) {
+    // 1. Dynamic Typing Active Search (with 300ms Debounce Delay)
+    searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            triggerSearch(searchInput.value.trim());
+        }, 300);
+    });
 
-    // INTERACTION LAYER: SEARCH EVENTS & DOM SUBMISSIONS
-    if (searchForm) {
-        searchForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Lock form from refreshing page on submission
-            if (searchInput) {
-                fetchRecipes(searchInput.value);
-            }
-        });
-    }
+    // 2. Keyboard Enter Bypasses Delay
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            clearTimeout(debounceTimer);
+            triggerSearch(searchInput.value.trim());
+        }
+    });
+}
 
-    // Interactive Favorite/Save heart button handler logic
-    function attachFavoriteListeners() {
-        document.querySelectorAll('.favoriteBtn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.stopPropagation(); // Stop parent clicks
-                const heartIcon = button.querySelector('i');
-                if (heartIcon) {
-                    heartIcon.classList.toggle('fas');
-                    heartIcon.classList.toggle('far');
-                    button.style.color = heartIcon.classList.contains('fas') ? '#E2725B' : '#313647';
-                }
-            });
-        });
-    }
+// 3. Fallback Click Event Button
+if (searchButton) {
+    searchButton.addEventListener('click', () => {
+        clearTimeout(debounceTimer);
+        triggerSearch(searchInput.value.trim());
+    });
+}
 
-    // INITIAL TRIGGER: Fire the initial rendering thread directly on document mounting
-    fetchRecipes();
+// Initial default query catalog pull on load
+window.addEventListener('DOMContentLoaded', () => {
+    triggerSearch('');
 });
