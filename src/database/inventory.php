@@ -1,5 +1,6 @@
 <?php
-session_start(); 
+session_start();
+error_log("Inventory: user_id from session = " . ($_SESSION['user_id'] ?? 'NOT SET'));
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../components/profile_recipesight.php'); //redirect to the login/signup page
